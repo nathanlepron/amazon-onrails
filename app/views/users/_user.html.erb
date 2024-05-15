@@ -1,0 +1,17 @@
+<div id="<%= dom_id user %>">
+  <p>
+    <strong>Email:</strong>
+    <%= user.email %>
+  </p>
+<% if logged_in? %>
+  <%= link_to "/", class: "nav-link active  address-size", "aria-current" => "page" do %>
+    <i class="bi bi-geo-alt"></i> Livrer à <%= user[:email] %><br/><span class="bold"><%= user[:postal_code] %> - <%= user[:address] %></span>
+  <% end %>
+<% else %>
+  <%= link_to new_session_path, class: "nav-link active address-size", "aria-current" => "page" do %>
+    <i class="bi bi-geo-alt"></i> Faites vous livrer<br/><span class="bold">Chez vous!</span>
+  <% end %>
+<% end %>
+
+
+</div>

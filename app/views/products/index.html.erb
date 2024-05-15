@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="card white">
+    <div class="card-body">
+<p style="color: green"><%= notice %></p>
+<p style="color: green"><%= alert %></p>
+<h1>Produits vendus sur Amazon-on-Rails!</h1>
+<% if(is_seller?) %>
+      <%= link_to "Ajouter un produit", new_product_path, class: "btn btn-primary" %>
+      <%end%>
+    </div>
+  </div>
+  <div class="row">
+      <% @products.each do |product| %>
+      <div class="col-3">
+        <div class="card white">
+          <%= link_to product,class:"simple-link", "aria-current" => "page" do  %>
+            <div class="card-body">
+              <%= render partial: 'product_show', locals: { product: product } %>
+            </div>
+            <%end%>
+          </div>
+        </div>
+      <% end %>
+  </div>
+</div>

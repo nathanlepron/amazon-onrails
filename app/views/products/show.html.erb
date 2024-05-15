@@ -1,0 +1,85 @@
+
+<div class="container">
+<div class="card white">
+<div class="card-body">
+
+<div style="display:inline-block">
+<%= link_to "Revenir aux produits", products_path,class:"btn btn-primary" %>
+      </div>
+<p style="color: green"><%= notice %></p>
+<div class="row">
+  <div class="col-4 relative-pos">
+    <%if @product.image_url.present?%>
+    <%= image_tag @product.image_url, id:"image-preview", alt: 'Amazon-on-Rails', class: 's-image d-inline-block align-text-top' %>
+    <%else%>
+<%= image_tag 'products.png', id:"image-preview", alt: 'Amazon-on-Rails', class: 's-image d-inline-block align-text-top' %>
+    <%end%>
+  </div>
+  <div class="col-5">
+<%= render @product %>
+      </div>
+      <div class="col-3">
+      <div class="card white">
+        <div class="card-body">
+          <p>
+            <span class="a-price-whole">
+              <%= @product.price.to_i %>
+            </span>
+            <span class="a-price-fraction">
+              <%= '%02d' % (@product.price * 100 % 100) %>
+            </span>
+            <span class="a-price-symbol">€</span>
+          </p>
+          <% if(@product.stock > 0) %>
+          <h5 class="text-success">En stock.</h5>
+          <% else %>
+          <h5 class="text-danger">Rupture de stock!</h5>
+          <% end %>
+          <% if(@product.stock <= 10) %>
+          <p class="text-danger">Plus que <%= @product.stock %> disponible !</p>
+          <% else %>
+          <p class="text-success"><%= @product.stock %> produits disponible.</p>
+          <% end %>
+          <div>
+              <% if logged_in? %>
+                <%= link_to "/", class: "nav-link active  address-size", "aria-current" => "page" do %>
+                  <i class="bi bi-geo-alt"></i> Livrer à <%= current_user[:email] %><br/><span class="bold"><%= current_user[:postal_code] %> - <%= current_user[:address] %></span>
+                <% end %>
+              <% else %>
+                <%= link_to new_session_path, class: "nav-link active address-size", "aria-current" => "page" do %>
+                  <i class="bi bi-geo-alt"></i> Faites vous livrer<br/><span class="bold">Chez vous!</span>
+                <% end %>
+              <% end %>
+              <%= form_with(url: update_stock_product_path(@product), method: :patch) do |form| %>
+              <div class="input-group">
+                <% if(@product.stock > 0) %>
+              <span class="input-group-text">Quantité</span>
+              <select class="form-select form-select-sm" aria-label="Choose quantity" name="quantity">
+                <% @product.stock.times do |i| %>
+                  <option value="<%= i + 1 %>"><%= i + 1 %></option>
+                <% end %>
+              </select>
+              <% end %>
+              </div>
+              <div class="full-width">
+                <%= form.hidden_field :product_id, value: @product.id %>
+                  <% if(@product.stock > 0) %>
+                  <%= form.submit "Acheter cet article", class:"btn btn-warning" %>
+                  <% end %>
+                <% end %>
+                <% if (current_user) %>
+                  <% if(current_user.id == Seller.find_by(id:@product.seller_id).user_id) %>
+                  <%= link_to "Modifier l'annonce", edit_product_path(@product), class:"btn btn-outline-primary" %>
+                  <%= button_to "Supprimer de la vente", @product, method: :delete, class:"btn btn-outline-danger" %>
+                  <%end%>
+                <%end%>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <%= link_to "Revenir aux produits", products_path,class:"btn btn-primary" %>
+  </div>
+</div>
+</div>

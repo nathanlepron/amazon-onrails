@@ -1,0 +1,20 @@
+<div id="<%= dom_id product %>">
+
+<%if product.image_url.present?%>
+    <%= image_tag product.image_url, id:"image-preview", alt: 'Amazon-on-Rails', class: 'card-img-top' %>
+    <%else%>
+<%= image_tag 'products.png', id:"image-preview", alt: 'Amazon-on-Rails', class: 'card-img-top' %>
+    <%end%>
+  <h5>
+    <%= product.name %>
+  </h5>
+  <p>
+  <span class="a-price-whole">
+    <%= product.price.to_i %>
+  </span>
+  <span class="a-price-fraction">
+    <%= '%02d' % (product.price * 100 % 100) %>
+  </span>
+  <span class="a-price-symbol">€</span>
+</p>
+</div>

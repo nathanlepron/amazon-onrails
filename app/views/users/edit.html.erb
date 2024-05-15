@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <%= link_to "Retour aux comptes marchands", users_path, class:"btn btn-primary" %>
+<h1>Mettre à jour mes informations</h1>
+
+<%= render "form", user: @user %>
+
+<br>
+
+<div>
+  <%= link_to "Annuler", users_path, class:"btn btn-outline-danger" %>
+</div>
+</div>
+</div>
+</div>

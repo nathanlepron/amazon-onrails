@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="card white">
+    <div class="card-body">
+      <p style="color: green"><%= notice %></p>
+
+      <h1>Les comptes marchands du moment</h1>
+      <div id="users" class="row">
+        <% @users.each do |user| %>
+        <% this_seller = Seller.find_by(user_id:user.id)%>
+        <div class="col-3">
+        <div class="card">
+          <%if this_seller.profile_image_url.present?%>
+            <%= image_tag this_seller.profile_image_url, id:"image-preview", alt: 'Amazon-on-Rails', class: 'card-img-top' %>
+            <%else%>
+        <%= image_tag 'products.png', id:"image-preview", alt: 'Amazon-on-Rails', class: 'card-img-top' %>
+            <%end%>
+          <div class="card-body">
+          <%= render user %>
+            <%= link_to "Voir la boutique", user, class:"btn btn-primary" %>
+          </div>
+          
+          </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

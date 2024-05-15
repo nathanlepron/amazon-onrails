@@ -1,0 +1,46 @@
+<div class="container" id="posts-content">
+    <div class="card">
+        <div class="card-body">
+            <h1>Content de vous voir <%= current_user.email if current_user %>!</h1>
+            <% if(!current_user) %>
+                <h6>Bénéficiez d'une meilleure expérience en vous connectant. <%= link_to "Connexion", new_session_path, class: "btn btn-light btn-sm" %></h6>
+                
+            <%end%>
+            <p>Les derniers produits mis en vente sur Amazon-on-Rails</p>
+        </div>
+    </div>
+    <div id="carouselExampleCaptions" class="carousel slide">
+        <div class="carousel-inner latest-products">
+        <% @last_4_products.each_with_index do |product, index| %>
+
+            <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                <%if product.image_url.present?%>
+                    <%= image_tag product.image_url, id:"image-preview", alt: 'Amazon-on-Rails', class: 'd-block w-100' %>
+                    <%else%>
+                <%= image_tag 'products.png', id:"image-preview", alt: 'Amazon-on-Rails', class: 'd-block w-100' %>
+                    <%end%>
+            <div class="carousel-caption d-none d-md-block text-dark">
+                <h5><%=product.name%></h5>
+                <p>
+                <span class="a-price-whole text-dark">
+              <%= product.price.to_i %>
+            </span>
+            <span class="a-price-fraction">
+              <%= '%02d' % (product.price * 100 % 100) %>
+            </span>
+            <span class="a-price-symbol">€</span>
+                </p>
+            </div>
+            </div>
+            <%end%>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+        </div>
+</div>

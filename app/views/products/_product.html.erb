@@ -1,0 +1,14 @@
+<div id="<%= dom_id product %>">
+  <h1>
+    <%= product.name %>
+  </h1>
+  <p>
+    <%= link_to "Visiter la boutique #{User.find_by(id:(Seller.find_by(id:product.seller_id).user_id)).email}", user_path(product.seller_id),class:"btn btn-link" %>
+  </p>
+  <p>
+    <%= product.description %>
+  </p>
+
+  
+
+</div>

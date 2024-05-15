@@ -1,0 +1,37 @@
+<div id="<%= dom_id transaction %>">
+<% product = Product.find(transaction.product_id) %>
+<% total_price = product.price*transaction.quantity %>
+<div class="card white transaction">
+    <div class="row">
+  <div class="col-4 relative-pos">
+    <%if product.image_url.present?%>
+    <%= image_tag product.image_url, id:"image-preview", alt: 'Amazon-on-Rails', class: ' rounded-start s-image' %>
+    <%else%>
+<%= image_tag 'products.png', id:"image-preview", alt: 'Amazon-on-Rails', class: ' rounded-start s-image' %>
+    <%end%>
+  </div>
+  <div class="col-8">
+    <div class="card-body">
+  <h5>
+    <%= transaction.quantity %>×<%= product.name %>
+  </h5>
+    <%= link_to "Boutique: #{User.find_by(id:(Seller.find_by(id:product.seller_id).user_id)).email}", user_path(product.seller_id),class:"btn btn-link" %>
+  <p class="reduce-text">
+    <%= product.description %>
+  </p>
+    
+    <span class="text-muted" style="--bs-text-opacity: .5;"><%= time_ago_in_words(transaction.created_at).gsub('about ', '') %> ago </span>
+    <p>
+            <span class="a-price-whole">
+              <%= total_price.to_i %>
+            </span>
+            <span class="a-price-fraction">
+              <%= '%02d' % (total_price * 100 % 100) %>
+            </span>
+            <span class="a-price-symbol">€</span>
+          </p>
+  </div>
+  </div>
+  </div>
+</div>
+</div>

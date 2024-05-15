@@ -1,0 +1,56 @@
+<div class="container">
+  <% selected_user_seller = Seller.find_by(user_id:@user.id)%>
+  <div class="card white">
+    <div class="card-body">
+      <%= link_to "Retour au menu", root_path, class:"btn btn-primary"%>
+      <p style="color: green"><%= notice %></p>
+      <div class="row">
+        <% if(selected_user_seller)%>
+        <div class="col-3">
+    <%= image_tag 'products.png', id:"image-preview", alt: 'Amazon-on-Rails', class: 'img-fluid rounded-start' %>
+        </div>
+        <div class="col-9">
+        <%else%>
+        <div class="col-12">
+          <%end%>
+      <h1>Votre profil utilisateur</h1>
+      <%= render @user %>
+      </div>
+      </div>
+
+        <% if(current_user && @user.id == User.find_by(id:current_user.id).id) %>
+        <%= link_to "Modifier mes informations", edit_user_path(@user), class:"btn btn-outline-primary"%>
+        <%= button_to "Supprimer mon compte", @user, method: :delete, class:"btn btn-outline-danger" %>
+        
+      
+      <hr>
+      <h4>Vos derniers achats</h4>
+      <div class="row">
+        <% @transactions.each do |transaction| %>
+          <div class="col-6">
+          <%= render transaction %>
+          </div>
+        <% end %>
+      </div>
+      <% end %>
+      <% if(selected_user_seller) %>
+        <hr>
+        <h4>Les derniers produits mis en vente</h4>
+        <div class="row">
+          <% @products.each do |product| %>
+          <div class="col-3">
+            <div class="card white">
+              <%= link_to product,class:"simple-link", "aria-current" => "page" do  %>
+                <div class="card-body">
+                  <%= render partial: 'products/product_show', locals: { product: product } %>
+                </div>
+                <%end%>
+              </div>
+            </div>
+          <% end %>
+      </div>
+      <%end%>
+    </div>
+
+  </div>
+</div>

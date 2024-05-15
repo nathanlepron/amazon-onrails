@@ -1,0 +1,55 @@
+
+
+<div class="row">
+  <div class="col-4">
+    <%if product.image_url.present?%>
+    <%= image_tag product.image_url, id:"image-preview", alt: 'Amazon-on-Rails', width: '350', height: '350', class: 'd-inline-block align-text-top' %>
+    <%else%>
+<%= image_tag 'products.png', id:"image-preview", alt: 'Amazon-on-Rails', width: '350', height: '350', class: 'd-inline-block align-text-top' %>
+    <%end%>
+    </div>
+  <div class="col-8">
+<%= form_with(model: product, multipart: true) do |form| %>
+  <% if product.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    
+  </div>
+  <div class="input-group mb-3">
+    <%= form.label "Nom de votre produit", style: "display: block", class: "input-group-text" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Gadget révolutionnaire" %>
+  </div>
+  <div class="input-group mb-3">
+    <%= form.label "Description du produit", style: "display: block", class: "input-group-text" %>
+    <%= form.text_area :description, class: "form-control", placeholder: "Ce gadget va révolutionner la monde par son incroyable capacité : ..." %>
+  </div>
+  <div class="input-group mb-3">
+    <%= form.label "Prix du produit", style: "display: block", class: "input-group-text" %>
+    <%= form.number_field :price, class: "form-control", placeholder: "5,3" %>
+    <span class="input-group-text" id="price">€</span>
+  </div>
+
+  <div class="input-group mb-3">
+    <%= form.label "Quantité à la vente", style: "display: block", class: "input-group-text" %>
+    <%= form.number_field :stock, class: "form-control",placeholder: "5" %>
+  </div>
+  <div class="input-group mb-3">
+    <input type="file" class="form-control" name="image" id="image_url_path">
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <%= form.submit ((product.persisted?) ? "Mettre à jour" : "Créer"),class:"btn btn-success " %>
+  </div>
+
+<% end %>
+</div>
+</div>
